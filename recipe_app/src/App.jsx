@@ -1,4 +1,3 @@
-// App.jsx
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import RecipeForm from './components/RecipeForm';
@@ -16,13 +15,21 @@ const App = () => {
     const toggleFavorite = (index) => {
         const updatedRecipes = [...recipes];
         updatedRecipes[index].favorite = !updatedRecipes[index].favorite;
-        setRecipes(updatedRecipes);
-        if (updatedRecipes[index].favorite) {
-            setFavoriteRecipes([...favoriteRecipes, updatedRecipes[index]]);
+    
+        const updatedRecipe = updatedRecipes[index];
+    
+        if (updatedRecipe.favorite) {
+            console.log("Adding to favorites:", updatedRecipe);
+            setFavoriteRecipes([...favoriteRecipes, updatedRecipe]);
         } else {
-            setFavoriteRecipes(favoriteRecipes.filter(recipe => recipe !== updatedRecipes[index]));
+            console.log("Removing from favorites:", updatedRecipe);
+            setFavoriteRecipes(favoriteRecipes.filter(recipe => recipe.id !== updatedRecipe.id));
         }
+    
+        setRecipes(updatedRecipes);
     };
+    
+    
 
     return (
         <Router>
@@ -36,5 +43,3 @@ const App = () => {
 };
 
 export default App;
-
-
